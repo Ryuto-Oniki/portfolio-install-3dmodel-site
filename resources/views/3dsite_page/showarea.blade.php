@@ -1,5 +1,6 @@
 <x-app-layout>
 
+<!-- 地域の動植物の3Dモデルを表示 -->
 
 <div class="w-32 h-dvh bg-neutral-800 absolute top-0 left-10">
 <h1 class="text-white font-serif text-4xl font-bold vertical-writing">
@@ -12,12 +13,12 @@
         <div class="grid grid-rows-2 gap-1 justify-items-stretch">
             @foreach($objectmodels as $objectmodel)
 
+            <!-- 3Dモデルのインストール -->
+
             <div class="flex justify-between items-center py-2 px-2 bg-neutral-700">
                 <div class="text-white">
                     {{ $objectmodel->name }}
                 </div>
-                <!-- Laravelは波括弧(書くとエラー起きるので文字)のネストをすることができない。
-                なので下のように書き換える。 -->
                 <form action="{{ route('install3dmodelsite.download', [ 'filename' => $objectmodel->modelname ] ) }}" method="get" class="size-6">
                     @csrf
                     <button type="submit"
@@ -38,27 +39,20 @@
 </div>
 
 
-
-
-<!-- <div class="w-64 h-5/6 bg-neutral-400 p-6 absolute bottom-0 right-10">
-    Lorem ipsum dolor, sit amet consectetur adipisicing elit. Amet aspernatur temporibus dolore autem, nisi esse harum. Exercitationem est provident vitae ratione eos aspernatur, sapiente nulla minus similique accusamus? Illum, deleniti.
-    Laboriosam nemo facere quas nihil vel impedit et animi perferendis, vitae at officiis quasi, architecto fugit laudantium ad nesciunt non ducimus mollitia nobis, magni dolorem. Officiis fugiat nulla blanditiis reiciendis.
-    Excepturi possimus autem ipsam veritatis tempore, unde fuga sed magnam alias similique hic eveniet omnis cupiditate doloribus inventore mollitia optio adipisci. Earum doloremque culpa modi dolorum sequi fugit ea architecto.
-    Sequi, officiis quam. Architecto, dolorem aspernatur expedita excepturi tempora obcaecati, repellat doloribus natus labore cumque praesentium amet? Quisquam totam velit sed earum at, dicta rerum voluptate, placeat neque suscipit nam.
-    Nam provident in esse, sint eum soluta, nisi minus odio delectus harum quas voluptatum quo temporibus, exercitationem id. Quam dolor inventore sapiente laboriosam mollitia voluptatum cupiditate ullam, laborum perspiciatis doloremque!
-</div> -->
-
+<!-- ここに3Dモデルを表示 -->
+<!-- data-model-url属性は後にデータベースからURIを取得 -->
 
 <div 
 id="three-container" 
-data-model-url="/storage/show_3dmodel/boombox_2k.gltf/boombox_2k.gltf"
+data-model-url="/storage/show_3dmodel/icelandic_rock_plates_skxfs_gltf_mid/Icelandic_Rock_Plates_skxfS_Mid.gltf"
 class="static"
 ></div>
+
+<!-- 表示する3Dモデルの変更(Three.jsの関数を取得し使用) -->
 
 <script>
     document.addEventListener('DOMContentLoaded', function() {
         const modelContainer = document.getElementById("three-container");
-        // data属性の際は必ずgetAttributeなどで属性の値を取り出す
         const modelUrl = modelContainer.getAttribute("data-model-url");
         gltfModel(modelUrl);
     });

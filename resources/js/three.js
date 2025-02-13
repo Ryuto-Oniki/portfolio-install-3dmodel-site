@@ -24,8 +24,6 @@ function init () {
     renderer.setSize(window.innerWidth, window.innerHeight);
     container.appendChild(renderer.domElement);
 
-    // GridHelper(a, b, c, d)...Grid表示するへルパ関数
-    // a...グリッドサイズ/b...グリッドの分割数/c...中心線の色/d...グリッドの色
     gridHelper = new THREE.GridHelper(12, 64, 0x888888, 0x666666);
     scene.add(gridHelper);
 
@@ -43,9 +41,9 @@ function init () {
     Light.position.set(-3, -3, -3);
     scene.add(Light);
 
-    camera.position.x = -1;
-    camera.position.y = 1.5;
-    camera.position.z = 2;
+    camera.position.x = -5;
+    camera.position.y = 6;
+    camera.position.z = -6;
 
     // OrbitControlsでマウス操作を可能にする
     controls = new OrbitControls(camera, renderer.domElement);
@@ -57,33 +55,32 @@ function init () {
 }
 
 
-// exportはbladeファイルでimportでこの関数を読み込ませるためにつけております
+// それぞれのBladeファイルで調整をするため、windowsとしグローバル変数に変更。
+// Viteを使用する方法を模索中
+
 window.gltfModel = function (modelURL) {
 
-    // ここで3Dモデルを読み込ませる設定をしております。
     loader = new GLTFLoader();
 
-    // load()の引数にファイルパスが入ることで、指定した3Dモデルを表示できます
     loader.load(modelURL, function (gltf) {
-        // gltfファイルの中のどのsceneを読み込ませるか設定しております
-        // アニメーションはないのでただのsceneを読み込ませてます
+
         const model = gltf.scene;
-        // 3dモデルのサイズを設定しております
         model.scale.set(1, 1, 1);
-        // 3d空間上の場所を設定しております
         model.position.set(0, 0, 0);
-        // 画面に加えて描写させております
         scene.add(model);
+
     });
 };
 
 
+// 画面サイズの変更に適用
 
 function onWindowResize() {
     renderer.setSize(window.innerWidth, window.innerHeight);
     camera.aspect = window.innerWidth / window.innerHeight;
     camera.updateProjectionMatrix();
 }
+
 
 function animate() {
     requestAnimationFrame(animate);

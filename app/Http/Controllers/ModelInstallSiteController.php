@@ -43,23 +43,10 @@ class ModelInstallSiteController extends Controller
     {
         //
 
-        // pluck()...指定したキーの全コレクション値を取得する。
+        // 指定したキーの全コレクション値を取得する。
         $regions = RegionCategory::all()->pluck('id');
 
-        // $regionsid = RegionCategory::select('id')->get()->pluck('id');
-
-        // $regionsids = RegionCategory::select('id')->areadetails()->get();
-
-        // $regionareas = RegionCategory::find($regionsid)->areadetails()->get();
-
-        // ここら辺後で勉強する
-        // whereIn(カラム名, [値])...特定の値がそのカラム名に含まれている
-        // 条件を引き出す？
-        // with()...これがリレーションの際にデータをまとめて引き出せるような
-        // メソッド？
-        // →Eloquent(LaravelでのORM)を事前にロードして関連するデータウィ効率的
-        // に取得できるらしい。
-        // areadetail()は、find()などの特定のモデルインスタンスにのみ有効
+        // $regionsに対応する地域のカラムをそれぞれ取得する。
         $regionareas = RegionCategory::whereIn('id', $regions)->with('areadetails')->get();
         
 
@@ -156,7 +143,7 @@ class ModelInstallSiteController extends Controller
 
     public function download($filename)
     {
-        // 
+        // 3dモデルのインストール
         $filePath = Storage::path('3dmodel/' . $filename);
 
         return response()->download($filePath);

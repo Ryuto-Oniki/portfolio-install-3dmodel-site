@@ -23,21 +23,21 @@ Route::get('/download/{filename}', [ ModelInstallSiteController::class, 'downloa
 
 Route::prefix('install3dmodelsite')->controller(ModelInstallSiteController::class)->name('install3dmodelsite.')->group(function() {
     
-    // HPに行く
+    // HP
     Route::get('/', 'hp')->name('hp');
 
-    // ライセンス確認画面に行く
+    // ライセンス確認画面
     Route::get('/license', 'license')->name('license');
 
-    // 地域全体検索に行く
+    // GoogleMapで地域検索
     Route::get('/areaindex', 'areaindex')->name('areaindex');
 
     // showarea...地域の詳細画面
     // Route::get('/{id}', 'showarea')->name('showarea');
-    // 地域詳細に行く
+    // 地域を3D表示
     Route::get('/showarea/{id}', 'showarea')->name('showarea');
 
-    // モデルをダウンロードする
+    // モデルをインストール
     Route::get('/download/{filename}', 'download')->name('download');
 });
 
